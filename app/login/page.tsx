@@ -49,7 +49,7 @@ export default function LoginPage() {
                             Internal Portal
                         </CardTitle>
                         <CardDescription className="text-[#666666] text-sm">
-                            Internal Operations Portal
+                            For Internal Operations
                         </CardDescription>
                     </div>
                 </CardHeader>
