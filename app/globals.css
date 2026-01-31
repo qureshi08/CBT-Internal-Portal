@@ -47,68 +47,58 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  
-  /* CBT Brand Colors */
-  --cbt-green: 142 76% 36%; /* HSL for CBT Green #22a85c */
-  --cbt-green-hover: 142 76% 32%;
-  --cbt-green-light: 142 76% 96%;
-  
-  /* Base Colors - Clean, Corporate */
-  --background: 0 0% 100%; /* Pure White */
-  --foreground: 222 47% 11%; /* Dark Blue-Gray */
-  
-  /* Cards & Containers */
-  --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
-  
-  /* Popovers */
-  --popover: 0 0% 100%;
-  --popover-foreground: 222 47% 11%;
-  
-  /* Primary - CBT Green */
-  --primary: var(--cbt-green);
+  --radius: 4px;
+
+  /* CBT Design System Palette */
+  --background: 0 0% 100%;
+  /* #FFFFFF */
+  --foreground: 0 0% 20%;
+  /* #333333 */
+
+  /* Primary - CBT Green #009245 */
+  --primary: 148 100% 29%;
   --primary-foreground: 0 0% 100%;
-  
-  /* Secondary - Light Gray */
-  --secondary: 210 20% 98%;
-  --secondary-foreground: 222 47% 11%;
-  
-  /* Muted - Subtle Gray */
-  --muted: 210 20% 96%;
-  --muted-foreground: 215 16% 47%;
-  
-  /* Accent - Light Green Tint */
-  --accent: 142 76% 96%;
-  --accent-foreground: 142 76% 24%;
-  
-  /* Destructive - Red */
+
+  /* Secondary - Clean White/Green */
+  --secondary: 0 0% 100%;
+  --secondary-foreground: 148 100% 29%;
+
+  /* Muted - Soft Gray (#666666 / #F2F2F2) */
+  --muted: 0 0% 95%;
+  --muted-foreground: 0 0% 40%;
+
+  /* Accent - Light Green Highlight (#E6F4EA) */
+  --accent: 138 31% 93%;
+  --accent-foreground: 148 100% 29%;
+
+  /* Status / Destructive */
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
-  
-  /* Borders & Inputs */
-  --border: 214 32% 91%;
-  --input: 214 32% 91%;
-  
+
+  /* Borders & Inputs (#E0E0E0) */
+  --border: 0 0% 88%;
+  --input: 0 0% 88%;
+
   /* Focus Ring - CBT Green */
-  --ring: var(--cbt-green);
-  
-  /* Charts */
-  --chart-1: var(--cbt-green);
-  --chart-2: 221 83% 53%;
-  --chart-3: 262 83% 58%;
-  --chart-4: 291 64% 42%;
-  --chart-5: 173 58% 39%;
-  
+  --ring: 148 100% 29%;
+
+  /* Cards & Containers */
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 20%;
+
+  /* Popovers */
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 20%;
+
   /* Sidebar */
   --sidebar: 0 0% 100%;
-  --sidebar-foreground: 222 47% 11%;
-  --sidebar-primary: var(--cbt-green);
+  --sidebar-foreground: 0 0% 20%;
+  --sidebar-primary: 148 100% 29%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 210 20% 98%;
-  --sidebar-accent-foreground: 222 47% 11%;
-  --sidebar-border: 214 32% 91%;
-  --sidebar-ring: var(--cbt-green);
+  --sidebar-accent: 0 0% 95%;
+  --sidebar-accent-foreground: 148 100% 29%;
+  --sidebar-border: 0 0% 88%;
+  --sidebar-ring: 148 100% 29%;
 }
 
 .dark {
@@ -149,7 +139,18 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+    line-height: 1.5;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    letter-spacing: 0.5px;
   }
 }

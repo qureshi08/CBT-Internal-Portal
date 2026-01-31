@@ -13,105 +13,57 @@ export default function LoginPage() {
     const [password, setPassword] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState('')
-    const [isSignUp, setIsSignUp] = useState(false)
-    const [name, setName] = useState('')
     const router = useRouter()
     const supabase = createClient()
 
-    const handleAuth = async (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsLoading(true)
         setError('')
 
         try {
-            if (isSignUp) {
-                // Sign up
-                const { data: authData, error: signUpError } = await supabase.auth.signUp({
-                    email,
-                    password,
-                    options: {
-                        data: {
-                            name: name,
-                        },
-                    },
-                })
+            const { error: signInError } = await supabase.auth.signInWithPassword({
+                email,
+                password,
+            })
 
-                if (signUpError) throw signUpError
+            if (signInError) throw signInError
 
-                if (authData.user) {
-                    // Create user profile
-                    const { error: profileError } = await supabase
-                        .from('users')
-                        .insert({
-                            id: authData.user.id,
-                            email: email,
-                            name: name,
-                            role: 'employee',
-                        })
-
-                    if (profileError) throw profileError
-
-                    router.push('/dashboard')
-                }
-            } else {
-                // Sign in
-                const { error: signInError } = await supabase.auth.signInWithPassword({
-                    email,
-                    password,
-                })
-
-                if (signInError) throw signInError
-
-                router.push('/dashboard')
-            }
+            router.push('/dashboard')
         } catch (err: any) {
-            setError(err.message || 'An error occurred during authentication')
+            setError(err.message || 'Invalid login credentials')
         } finally {
             setIsLoading(false)
         }
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-muted/30 p-4">
-            <Card className="w-full max-w-md">
-                <CardHeader className="space-y-1 text-center">
-                    <div className="flex justify-center mb-4">
-                        <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center">
-                            <span className="text-2xl font-bold text-primary-foreground">CBT</span>
-                        </div>
+        <div className="min-h-screen flex items-center justify-center bg-white p-4 font-sans">
+            <Card className="w-full max-w-sm rounded-[4px] border border-[#E0E0E0] shadow-sm">
+                <CardHeader className="space-y-4 text-center pt-8 pb-4">
+                    <div className="flex justify-center">
+                        <img src="/logo.png" alt="CBT Logo" className="w-16 h-16 rounded-[4px] shadow-sm" />
                     </div>
-                    <CardTitle className="text-2xl font-bold">
-                        {isSignUp ? 'Create an account' : 'Welcome back'}
-                    </CardTitle>
-                    <CardDescription>
-                        {isSignUp
-                            ? 'Enter your details to create your account'
-                            : 'Enter your credentials to access the portal'}
-                    </CardDescription>
+                    <div className="space-y-1">
+                        <CardTitle className="text-2xl font-bold tracking-tight text-[#333333]">
+                            Internal Portal
+                        </CardTitle>
+                        <CardDescription className="text-[#666666] text-sm">
+                            Internal Operations Portal
+                        </CardDescription>
+                    </div>
                 </CardHeader>
-                <CardContent>
-                    <form onSubmit={handleAuth} className="space-y-4">
-                        {isSignUp && (
-                            <div className="space-y-2">
-                                <Label htmlFor="name">Full Name</Label>
-                                <Input
-                                    id="name"
-                                    type="text"
-                                    placeholder="John Doe"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    required={isSignUp}
-                                    disabled={isLoading}
-                                />
-                            </div>
-                        )}
-
+                <CardContent className="pb-8">
+                    <form onSubmit={handleLogin} className="space-y-6">
                         <div className="space-y-2">
-                            <Label htmlFor="email">Email</Label>
+                            <Label htmlFor="email" className="text-sm font-medium text-[#333333]">
+                                Email Address
+                            </Label>
                             <Input
                                 id="email"
                                 type="email"
-                                placeholder="you@cbt.com"
+                                placeholder="name@cbt.com"
+                                className="rounded-[4px] border-[#E0E0E0] focus-visible:ring-1 focus-visible:ring-[#009245] placeholder:text-[#999999]"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
@@ -120,44 +72,39 @@ export default function LoginPage() {
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="password">Password</Label>
+                            <Label htmlFor="password" className="text-sm font-medium text-[#333333]">
+                                Password
+                            </Label>
                             <Input
                                 id="password"
                                 type="password"
                                 placeholder="••••••••"
+                                className="rounded-[4px] border-[#E0E0E0] focus-visible:ring-1 focus-visible:ring-[#009245] placeholder:text-[#999999]"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                                 disabled={isLoading}
-                                minLength={6}
                             />
                         </div>
 
                         {error && (
-                            <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+                            <div className="p-3 text-xs font-medium text-red-600 border border-red-100 bg-red-50 rounded-[4px] text-center">
                                 {error}
                             </div>
                         )}
 
-                        <Button type="submit" className="w-full" disabled={isLoading}>
-                            {isLoading ? 'Please wait...' : isSignUp ? 'Sign Up' : 'Sign In'}
+                        <Button
+                            type="submit"
+                            className="w-full rounded-[4px] bg-[#009245] hover:bg-[#007A33] text-white font-semibold text-sm h-11 transition-colors"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? 'Signing in...' : 'Sign In'}
                         </Button>
 
-                        <div className="text-center text-sm">
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    setIsSignUp(!isSignUp)
-                                    setError('')
-                                }}
-                                className="text-primary hover:underline"
-                                disabled={isLoading}
-                            >
-                                {isSignUp
-                                    ? 'Already have an account? Sign in'
-                                    : "Don't have an account? Sign up"}
-                            </button>
-                        </div>
+                        <p className="text-xs text-center text-[#666666]">
+                            Access restricted to authorized personnel. <br />
+                            Contact Admin for account creation.
+                        </p>
                     </form>
                 </CardContent>
             </Card>
