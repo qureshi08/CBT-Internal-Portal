@@ -20,6 +20,7 @@ import { ChevronLeft, ChevronRight, Loader2, Calendar as CalendarIcon, Clock, Ma
 import { createClient } from '@/lib/supabase/client'
 import { Event } from '@/lib/types/database'
 import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import {
     Dialog,
     DialogContent,
