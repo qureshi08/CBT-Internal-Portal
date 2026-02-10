@@ -15,7 +15,9 @@ import {
     X,
     Users,
     Lock,
+    MessageSquare,
 } from 'lucide-react'
+import NotificationsBell from '@/components/notifications-bell'
 import {
     Dialog,
     DialogContent,
@@ -34,7 +36,9 @@ const navigation = [
     { name: 'Calendar', href: '/calendar', icon: Calendar },
     { name: 'Event Requests', href: '/events', icon: FileText },
     { name: 'Honor Shop', href: '/wallet', icon: Wallet },
+    { name: 'Feedback', href: '/feedback', icon: MessageSquare },
     { name: 'User Management', href: '/admin/users', icon: Users, adminOnly: true },
+    { name: 'Manage Feedback', href: '/admin/feedback', icon: MessageSquare, adminOnly: true },
 ]
 
 export default function DashboardLayout({
@@ -240,7 +244,12 @@ export default function DashboardLayout({
                         <Menu className="h-6 w-6" />
                     </button>
                     <span className="font-bold text-lg text-[#333333]">Internal Portal</span>
-                    <div className="w-6" />
+                    <NotificationsBell />
+                </header>
+
+                {/* Desktop Header */}
+                <header className="h-16 border-b border-[#E0E0E0] bg-white hidden lg:flex sticky top-0 z-30 px-8 items-center justify-end">
+                    <NotificationsBell />
                 </header>
 
                 {/* Page Content */}

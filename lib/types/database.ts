@@ -2,6 +2,16 @@
 export type UserRole = 'employee' | 'approver' | 'admin'
 export type EventStatus = 'pending' | 'approved' | 'rejected'
 export type TransactionType = 'credit' | 'debit'
+export type NotificationType =
+    | 'event_approved'
+    | 'event_rejected'
+    | 'wallet_credit'
+    | 'wallet_debit'
+    | 'event_reminder'
+    | 'feedback_response'
+    | 'system'
+export type FeedbackStatus = 'pending' | 'in_progress' | 'resolved' | 'closed'
+export type FeedbackType = 'complaint' | 'suggestion'
 
 // Database Tables
 export interface User {
@@ -83,3 +93,47 @@ export interface DashboardStats {
     walletBalance: number
     recentTransactionsCount: number
 }
+
+// Notifications
+export interface Notification {
+    id: string
+    user_id: string
+    type: NotificationType
+    title: string
+    message: string
+    link: string | null
+    is_read: boolean
+    created_at: string
+}
+
+// Feedback/Complaints & Suggestions
+export interface Feedback {
+    id: string
+    user_id: string
+    type: FeedbackType
+    subject: string
+    description: string
+    status: FeedbackStatus
+    admin_response: string | null
+    responded_by: string | null
+    responded_at: string | null
+    created_at: string
+    updated_at: string
+}
+
+export interface FeedbackWithUser extends Feedback {
+    user: Pick<User, 'id' | 'name' | 'email'>
+    responder?: Pick<User, 'id' | 'name' | 'email'>
+}
+
+export interface CreateFeedbackInput {
+    type: FeedbackType
+    subject: string
+    description: string
+}
+
+export interface UpdateFeedbackInput {
+    status: FeedbackStatus
+    admin_response?: string
+}
+
